@@ -2,6 +2,9 @@
 import { Map, MessageSquare, Sparkle } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import ThemeToggle from './theme-toggle'
+import { SignedOut, SignInButton } from '@clerk/nextjs'
+import { Button } from './ui/button'
 
 const Navbar = () => {
   return (
@@ -18,15 +21,24 @@ const Navbar = () => {
           </Link>
 
           <Link href="/roadmap" className='text-sm hover:text-primary flex items-center gap-1'>
-            <Map className='h-5 w-5'/>
+            <Map className='h-5 w-5' />
             Roadmap
           </Link>
-          <Link href="/roadmap" className='text-sm hover:text-primary flex items-center gap-1'>
-            <MessageSquare className='h-5 w-5'/>
+          <Link href="/feedback" className='text-sm hover:text-primary flex items-center gap-1'>
+            <MessageSquare className='h-5 w-5' />
             Feedback
           </Link>
         </div>
-        <div>Signin</div>
+        <div className='flex items-center gap-4 '>
+          <ThemeToggle />
+          <SignedOut>
+            <SignInButton>
+              <Button asChild>
+                <Link href='/sign-in'>Sign In</Link>
+              </Button>
+            </SignInButton>
+          </SignedOut>
+        </div>
       </div>
     </nav>
   )
