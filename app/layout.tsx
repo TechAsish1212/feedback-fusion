@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";
+import { syncCurrentUser } from "@/lib/sync-user";
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -15,11 +16,12 @@ export const metadata: Metadata = {
   description: "A platform for users to suggest and vote on features ",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await syncCurrentUser();
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
