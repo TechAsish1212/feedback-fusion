@@ -33,7 +33,7 @@ export default async function RootLayout({
             <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
             {/* footer */}
             <Footer />
-            <Toaster />
+            <Toaster richColors />
           </ThemeProvider>
         </body>
       </html>

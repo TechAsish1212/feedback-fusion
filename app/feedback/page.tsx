@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import prisma from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server'
-import { Badge, Map, PlusIcon } from 'lucide-react';
+import {  Map, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 import { getCategoryDesign } from '../data/category-data';
 import FeedbackList from '@/components/feedback-list';
+import { Badge } from '@/components/ui/badge';
 
 
 const FeedbackPage = async () => {
@@ -82,7 +83,7 @@ const FeedbackPage = async () => {
                               {cat.category}
                             </span>
                           </div>
-                          <Badge variant="secondary" className={`${design.light} ${design.text}`}>
+                          <Badge variant='outline' className={`${design.light} ${design.text}`}>
                             {cat._count}
                           </Badge>
                         </div>
