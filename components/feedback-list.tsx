@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatDistanceToNow } from "date-fns";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, User } from "lucide-react";
 import Link from "next/link";
+import { STATUS_GROUPS } from "@/app/data/status-data";
 import { getCategoryDesign } from "@/app/data/category-data";
 
 interface FeedbackListProps {
@@ -15,108 +17,64 @@ interface FeedbackListProps {
 
 const FeedbackList = ({ initialPosts, userId }: FeedbackListProps) => {
   const [posts, setPosts] = useState(initialPosts);
-
-  const handleVote = async (postId: string) => {
-    if (!userId) {
-      alert("Please sign in to vote");
-      return;
-    }
-
-    try {
-      const res = await fetch(`/api/vote`, {
-        method: "POST",
-        body: JSON.stringify({ postId }),
-      });
-
-      const data = await res.json();
-
-      setPosts((prev) =>
-        prev.map((post) =>
-          post.id === postId
-            ? { ...post, votes: data.votes }
-            : post
-        )
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  if (posts.length === 0) {
-    return (
-      <Card>
-        <CardContent className="p-8 text-center text-muted-foreground">
-          No feedback yet. Be the first to share 🚀
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <div className="space-y-4">
-      {posts.map((post) => {
-        const design = getCategoryDesign(post.category);
-        const Icon = design.icon;
-
-        const voteCount = post.votes?.length || post._count?.votes || 0;
-
-        return (
-          <Card
-            key={post.id}
-            className="hover:shadow-md transition-shadow"
-          >
-            <CardContent className="p-6 flex gap-6">
-              
-              {/* Vote Section */}
-              <div className="flex flex-col items-center gap-2">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  onClick={() => handleVote(post.id)}
-                >
-                  <ArrowUp className="h-4 w-4" />
-                </Button>
-                <span className="text-sm font-semibold">
-                  {voteCount}
-                </span>
-              </div>
-
-              {/* Content Section */}
-              <div className="flex-1 space-y-3">
-                <Link href={`/feedback/${post.id}`}>
-                  <CardTitle className="text-lg hover:underline cursor-pointer">
-                    {post.title}
-                  </CardTitle>
-                </Link>
-
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {post.description}
-                </p>
-
-                {/* Meta Info */}
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <div
-                    className={`flex items-center gap-1 px-2 py-1 rounded-md border ${design.light} ${design.border}`}
-                  >
-                    <Icon className={`h-3 w-3 ${design.text}`} />
-                    {post.category}
-                  </div>
-
-                  <span>
-                    by {post.author?.name || "Anonymous"}
+      {posts.map((post)=>(
+        <Card key={post.id} className="hover:shadow-md transition-shadow border">
+          <CardHeader>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">{post.title}</CardTitle>
+                <CardDescription className="flex items-center gap-1.5 mt-1">
+                  <User className="h-4 w-4"/>
+                  {post.author.name}
+                  <span>|</span>
+                  <span className="whitespace-nowrap">
+                    {formatDistanceToNow(new Date(post.createdAt),{
+                      addSuffix:true,
+                    })}
                   </span>
-
-                  <span>
-                    {new Date(post.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
+                </CardDescription>
               </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+               <div className="flex gap-1.5">
+                {/* Status Badge */}
+                {(() => {
+                  const statusGroup =
+                    STATUS_GROUPS[post.status as keyof typeof STATUS_GROUPS];
+                  if (!statusGroup) return null;
+                  const StatusIcon = statusGroup.icon;
+
+                  return (
+                    <Badge
+                      className={`${statusGroup.countColor} border ${statusGroup.color} flex items-center gap-1`}
+                    >
+                      <StatusIcon className="h-3 w-3" />
+                      {statusGroup.title}
+                    </Badge>
+                  );
+                })()}
+                {/* Category Badge */}
+                {(() => {
+                  const design = getCategoryDesign(post.category);
+                  const Icon = design.icon;
+
+                  return (
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${design.border} ${design.text} flex items-center gap-1`}
+                    >
+                      <Icon className="h-3 w-3" />
+                      {post.category}
+                    </Badge>
+                  );
+                })()}
+              </div>
+            </div>
+          </CardHeader>
+        </Card>
+      ))}
     </div>
-  );
+  )
 };
 
 export default FeedbackList;
