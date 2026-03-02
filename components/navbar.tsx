@@ -172,7 +172,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+              <div className="h-8 w-8 rounded-full bg-linear-to-r from-teal-500 to-indigo-500 flex items-center justify-center">
                 <Sparkle className="h-6 w-6 text-white" />
               </div>
               <span className="capitalize text-xl font-bold">

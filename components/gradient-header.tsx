@@ -8,7 +8,7 @@ interface GradientHeaderprops {
 
 const GradientHeader = ({ title, subtitle, children }:GradientHeaderprops) => {
     return (
-        <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 p-8 text-white mb-8">
+        <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-teal-500 via-cyan-500 to-indigo-500 p-8 text-white mb-8">
             <div className="relative z-10">
                 <h1 className="text-4xl font-bold">{title}</h1>
                 {subtitle&&(
