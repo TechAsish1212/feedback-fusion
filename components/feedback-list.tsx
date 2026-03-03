@@ -146,10 +146,10 @@ const FeedbackList = ({ initialPosts, userId }: FeedbackListProps) => {
                 />
                 {post.votes.length} Votes
               </Button>
-              <div className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
+              {/* <div className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
                 <MessageSquare className="h-4 w-4" />
                 Comment
-              </div>
+              </div> */}
             </div>
           </CardContent>
         </Card>

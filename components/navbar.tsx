@@ -147,7 +147,7 @@
 
 "use client"
 
-import { Map, MessageSquare, Sparkle, Menu, X } from "lucide-react"
+import { Map, MessageSquare, Sparkle, Menu, X, Shield } from "lucide-react"
 import Link from "next/link"
 import React, { useState } from "react"
 import ThemeToggle from "./theme-toggle"
@@ -197,6 +197,12 @@ const Navbar = () => {
             <MessageSquare className="h-5 w-5" />
             Feedback
           </Link>
+          <SignedIn>
+            <Link href='/admin' className="text-sm hover:text-primary transition-colors flex items-center gap-1">
+            <Shield className="h-4 w-4" />
+            Admin
+            </Link>
+          </SignedIn>
         </div>
 
         {/* Right Section */}
@@ -267,7 +273,6 @@ const Navbar = () => {
                 </Button>
               </SignInButton>
             </SignedOut>
-
             <SignedIn>
               <UserButton />
             </SignedIn>
