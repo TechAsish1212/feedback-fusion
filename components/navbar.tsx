@@ -29,7 +29,9 @@ const Navbar = () => {
                 <Sparkle className="h-6 w-6 text-white" />
               </div>
               <span className="capitalize text-xl font-bold">
-                Feed<span className="text-teal-400">Nova</span>
+                Feed  <span className="bg-linear-to-r from-teal-400 to-indigo-500  bg-clip-text text-transparent">
+                  Nova
+                </span>
               </span>
             </div>
           </Link>
@@ -52,8 +54,8 @@ const Navbar = () => {
           </Link>
           <SignedIn>
             <Link href='/admin' className="text-sm hover:text-primary transition-colors flex items-center gap-1">
-            <Shield className="h-4 w-4" />
-            Admin
+              <Shield className="h-4 w-4" />
+              Admin
             </Link>
           </SignedIn>
         </div>
