@@ -12,10 +12,15 @@ import { syncCurrentUser } from "@/lib/sync-user";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Feedback Fusion",
-  description: "A platform for users to suggest and vote on features ",
+  title: "Feed Nova",
+  description: "A platform for users to suggest and vote on features",
+  icons: {
+    icon: {
+      url: '/favicon.ico',
+      type: 'image/png',
+    },
+  },
 };
-
 export default async function RootLayout({
   children,
 }: Readonly<{
